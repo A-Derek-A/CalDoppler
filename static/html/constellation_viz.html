@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <!-- Include the CesiumJS JavaScript and CSS files -->
+  <!-- <script src="https://cesium.com/downloads/cesiumjs/releases/1.109/Build/Cesium/Cesium.js"></script> -->
+  <!-- <link href="https://cesium.com/downloads/cesiumjs/releases/1.109/Build/Cesium/Widgets/widgets.css" rel="stylesheet"> -->
+  <script src="https://cesium.com/downloads/cesiumjs/releases/1.57/Build/Cesium/Cesium.js"></script>
+  <link href="https://cesium.com/downloads/cesiumjs/releases/1.57/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+</head>
+<body>
+  <div id="cesiumContainer" style="width: 100%; height:100%"></div>
+  <script type="module">
+    Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJhM2IwYzZiNi1kMzUyLTRmNGQtODlmYi0zOWRmZDlhOWUwMTMiLCJpZCI6MTYyMjcyLCJpYXQiOjE2OTM5MDEwNTB9.eRLqENiLW0m9_zSnoTUniEDdHTJGZNCna6bqQ-2vP7g';
+    
+    var viewer = new Cesium.Viewer('cesiumContainer', {
+        skyBox : false,
+        skyAtmosphere: false,
+        baseLayerPicker: false,
+        geocoder: false,
+        homeButton: false,
+        infoBox: false,
+        sceneModePicker: false,
+        navigationHelpButton: false,
+        shouldAnimate : true,
+        contextOptions : {
+            webgl: {
+                alpha: true
+            }
+        }
+    });
+
+var scene = viewer.scene;
+scene.backgroundColor = Cesium.Color.WHITE;
+scene.highDynamicRange = false;
+var canvas = viewer.canvas;
+canvas.setAttribute('tabindex', '0');
+canvas.onclick = function() {
+    canvas.focus();
+};
+var ellipsoid = scene.globe.ellipsoid;
+var globe = viewer.scene.globe;
+
+// 添加 Bing Maps 影像
+globe.imageryLayers.addImageryProvider(
+  new Cesium.IonImageryProvider({ assetId: 2 })
+);
+
+
+var tonerLayer = globe.imageryLayers.addImageryProvider(
+    Cesium.createOpenStreetMapImageryProvider({
+        url : 'https://stamen-tiles.a.ssl.fastly.net/toner-background/',
+        credit : 'Map tiles by Stamen Design, under CC BY 3.0. Data by OpenStreetMap, under CC BY SA.'
+    })
+);
+
+tonerLayer.alpha = 0.3;
+tonerLayer.brightness = 3;
+tonerLayer.contrast = 0.7;
+
+
+const pointCollection = viewer.scene.primitives.add(
+  new Cesium.PointPrimitiveCollection()
+);
+viewer.entities.add({name: 'sat-500', position: Cesium.Cartesian3.fromDegrees(44.572944604471, 9.204104772639417, 367431.4540919148), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-0', position: Cesium.Cartesian3.fromDegrees(42.185518336865535, 8.474155300720541, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-1', position: Cesium.Cartesian3.fromDegrees(51.72441718994453, 23.791913093518307, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-2', position: Cesium.Cartesian3.fromDegrees(52.86948059286419, 29.946769215299824, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-3', position: Cesium.Cartesian3.fromDegrees(33.794128685265996, 1.9735785183213577, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-4', position: Cesium.Cartesian3.fromDegrees(64.89507453306976, 3.038121158328365, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-5', position: Cesium.Cartesian3.fromDegrees(57.96753520547081, 14.148498675662632, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-6', position: Cesium.Cartesian3.fromDegrees(41.032901514681924, 27.811135916681515, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-7', position: Cesium.Cartesian3.fromDegrees(46.82043568004346, 12.055142953978368, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-8', position: Cesium.Cartesian3.fromDegrees(44.49950882747147, 11.491540521303941, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-9', position: Cesium.Cartesian3.fromDegrees(62.534828292983626, -1.8404642868643781, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-10', position: Cesium.Cartesian3.fromDegrees(60.08998737114687, 18.46159615922301, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-11', position: Cesium.Cartesian3.fromDegrees(27.991779967245304, 12.555816036458474, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-12', position: Cesium.Cartesian3.fromDegrees(32.956448640121856, 19.8004913532361, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-13', position: Cesium.Cartesian3.fromDegrees(55.13366624739293, 1.5957851978748823, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-14', position: Cesium.Cartesian3.fromDegrees(56.708224077823424, 3.0229940763421905, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-15', position: Cesium.Cartesian3.fromDegrees(29.855897598051005, 5.117348481098509, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-16', position: Cesium.Cartesian3.fromDegrees(31.09256073323352, 22.391641528675994, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-17', position: Cesium.Cartesian3.fromDegrees(36.63252844359042, 3.0657910712737038, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-18', position: Cesium.Cartesian3.fromDegrees(37.213087101644035, -11.764208808404298, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-19', position: Cesium.Cartesian3.fromDegrees(44.267998709270834, -9.374432620294582, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-20', position: Cesium.Cartesian3.fromDegrees(27.71509413657678, 9.541484448095632, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-21', position: Cesium.Cartesian3.fromDegrees(28.30806041080984, 13.604266114453953, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-22', position: Cesium.Cartesian3.fromDegrees(55.19134521337514, -10.202660517329017, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-23', position: Cesium.Cartesian3.fromDegrees(47.80836565005642, -2.3558328838899714, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-24', position: Cesium.Cartesian3.fromDegrees(49.70254552570327, 15.324642377839293, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-25', position: Cesium.Cartesian3.fromDegrees(50.500286772286486, 12.658110139344597, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-26', position: Cesium.Cartesian3.fromDegrees(49.57191418543795, -2.417149867036712, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-27', position: Cesium.Cartesian3.fromDegrees(66.31632267280071, 7.433756755454549, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-28', position: Cesium.Cartesian3.fromDegrees(42.952703161335116, 12.914311126561529, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-29', position: Cesium.Cartesian3.fromDegrees(36.090212936730644, 27.007062916859162, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-30', position: Cesium.Cartesian3.fromDegrees(41.30049019969439, 25.01447057730995, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-31', position: Cesium.Cartesian3.fromDegrees(52.67841330235685, -1.1457304578790353, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-32', position: Cesium.Cartesian3.fromDegrees(41.36204112354516, 6.582747842387871, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-33', position: Cesium.Cartesian3.fromDegrees(56.36390697481312, 4.0471173844867145, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-34', position: Cesium.Cartesian3.fromDegrees(65.48769973783132, 8.13889223751984, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-35', position: Cesium.Cartesian3.fromDegrees(44.24292379788901, 31.879616359384325, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-36', position: Cesium.Cartesian3.fromDegrees(54.72272054345448, 14.572408400859965, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-37', position: Cesium.Cartesian3.fromDegrees(45.2298792387066, 29.31823327246195, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-38', position: Cesium.Cartesian3.fromDegrees(36.5068021435568, 21.369578747518798, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-39', position: Cesium.Cartesian3.fromDegrees(63.965063877621176, 19.64065242282735, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-40', position: Cesium.Cartesian3.fromDegrees(37.135669402350224, 20.82117420259014, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-41', position: Cesium.Cartesian3.fromDegrees(23.77313049275889, 9.501546812241386, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-42', position: Cesium.Cartesian3.fromDegrees(35.843715697070586, 25.18658284653735, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-43', position: Cesium.Cartesian3.fromDegrees(24.685305305047155, 20.025750264598596, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-44', position: Cesium.Cartesian3.fromDegrees(54.34854960808762, 24.700652893758395, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-45', position: Cesium.Cartesian3.fromDegrees(34.09649449585875, -10.949846150131947, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-46', position: Cesium.Cartesian3.fromDegrees(50.61924706437001, -9.364335201098193, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-47', position: Cesium.Cartesian3.fromDegrees(51.716970152900174, 29.141405760491956, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-48', position: Cesium.Cartesian3.fromDegrees(34.50062243873905, 16.963205756504014, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-49', position: Cesium.Cartesian3.fromDegrees(25.835212336054223, 22.142313087843434, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-50', position: Cesium.Cartesian3.fromDegrees(27.740874472506793, 9.471610748139947, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-51', position: Cesium.Cartesian3.fromDegrees(28.12839023578116, 18.938772835073824, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-52', position: Cesium.Cartesian3.fromDegrees(30.993894128334983, 27.518822757210717, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-53', position: Cesium.Cartesian3.fromDegrees(57.90464956210563, 22.25534889846142, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-54', position: Cesium.Cartesian3.fromDegrees(51.903521192409954, 17.963315055469185, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-55', position: Cesium.Cartesian3.fromDegrees(36.8542166707483, 12.660123716432022, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-56', position: Cesium.Cartesian3.fromDegrees(21.85071789800389, 5.917837220207903, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-57', position: Cesium.Cartesian3.fromDegrees(41.301078439599465, -1.8513175957384254, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-58', position: Cesium.Cartesian3.fromDegrees(34.08238272070442, 18.45273951467048, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-59', position: Cesium.Cartesian3.fromDegrees(46.66099556454137, -5.0119140489319705, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-60', position: Cesium.Cartesian3.fromDegrees(23.3677131266498, 3.5130260731276053, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-61', position: Cesium.Cartesian3.fromDegrees(38.78370687824939, 9.205315180479891, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-62', position: Cesium.Cartesian3.fromDegrees(42.534896078342506, 0.4635190881385916, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-63', position: Cesium.Cartesian3.fromDegrees(50.811995175622414, 2.2167348039943326, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-64', position: Cesium.Cartesian3.fromDegrees(32.83271221286061, -0.9782471803374225, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-65', position: Cesium.Cartesian3.fromDegrees(57.34134495014477, 11.146623068494272, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-66', position: Cesium.Cartesian3.fromDegrees(55.0986367558186, 10.282418527444992, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-67', position: Cesium.Cartesian3.fromDegrees(28.957839405784437, -2.033930303681804, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-68', position: Cesium.Cartesian3.fromDegrees(42.03605983470517, -11.314737172398239, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-69', position: Cesium.Cartesian3.fromDegrees(33.055514566168505, 7.031354486796175, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-70', position: Cesium.Cartesian3.fromDegrees(22.854278247821313, 9.423124706785881, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-71', position: Cesium.Cartesian3.fromDegrees(33.38126527896971, 9.725041789986742, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-72', position: Cesium.Cartesian3.fromDegrees(58.59058084608751, 5.430525759284978, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-73', position: Cesium.Cartesian3.fromDegrees(46.286300801400316, 22.688209751230307, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-74', position: Cesium.Cartesian3.fromDegrees(35.485901297380344, 10.072940597736109, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-75', position: Cesium.Cartesian3.fromDegrees(47.10212055358199, 19.495748234440384, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-76', position: Cesium.Cartesian3.fromDegrees(58.849518974792204, 15.46091899078361, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-77', position: Cesium.Cartesian3.fromDegrees(29.146493085659124, 26.395960842966357, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-78', position: Cesium.Cartesian3.fromDegrees(35.768337356254975, 7.575002626482808, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-79', position: Cesium.Cartesian3.fromDegrees(39.05949192115124, 24.591004347862548, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-80', position: Cesium.Cartesian3.fromDegrees(61.17404786703519, -6.65846955579011, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-81', position: Cesium.Cartesian3.fromDegrees(63.20164797987349, 9.997613220828018, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-82', position: Cesium.Cartesian3.fromDegrees(64.15985607085922, 13.839815558339021, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-83', position: Cesium.Cartesian3.fromDegrees(59.17356142177498, 17.864106081614924, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-84', position: Cesium.Cartesian3.fromDegrees(23.402610780814733, 10.469597794566155, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-85', position: Cesium.Cartesian3.fromDegrees(33.74203668861243, 0.2091368226263976, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-86', position: Cesium.Cartesian3.fromDegrees(46.19497831786977, 20.144107855418614, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-87', position: Cesium.Cartesian3.fromDegrees(55.511270577992725, -4.673643892119064, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-88', position: Cesium.Cartesian3.fromDegrees(32.748932156710254, -4.094506778364655, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-89', position: Cesium.Cartesian3.fromDegrees(40.575550655630366, -9.00469750378239, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-90', position: Cesium.Cartesian3.fromDegrees(58.2177305493241, 17.57644793350658, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-91', position: Cesium.Cartesian3.fromDegrees(30.538477487646883, 19.98302549287121, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-92', position: Cesium.Cartesian3.fromDegrees(44.85899215978261, 10.508111819882654, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-93', position: Cesium.Cartesian3.fromDegrees(59.13577553887146, -0.3434023342418996, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-94', position: Cesium.Cartesian3.fromDegrees(53.180432784795485, -4.433261924757464, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-95', position: Cesium.Cartesian3.fromDegrees(41.30872208177108, 25.30379336655146, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-96', position: Cesium.Cartesian3.fromDegrees(47.76905766908, 26.3104518448819, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-97', position: Cesium.Cartesian3.fromDegrees(62.35197029352046, 13.93890312611978, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-98', position: Cesium.Cartesian3.fromDegrees(35.33210583694075, 18.76946348242752, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+viewer.entities.add({name: 'pt-99', position: Cesium.Cartesian3.fromDegrees(54.516673524425904, -7.515961018694907, 0), ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : Cesium.Color.BLACK.withAlpha(1),}});
+			viewer.camera.flyTo({
+						destination : Cesium.Cartesian3.fromDegrees(19.57, 10.32, 20000000.0), //default - africa
+					});
+			viewer.resolutionScale = window.devicePixelRatio;
+
+		</script>
+	</body>
+</html>

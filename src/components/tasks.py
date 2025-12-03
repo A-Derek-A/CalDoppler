@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 import time
-from sats import Sat
+from components.sats import Sat
 from dataclasses import dataclass
 
 
