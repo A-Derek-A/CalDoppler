@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 import time
 from components.sats import Sat
 from dataclasses import dataclass
+from utils import sample_point_in_spherical_cap
 
 
 
