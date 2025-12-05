@@ -39,7 +39,7 @@ class CalDopplerTask(Task):
         results = []
         lat, lon, height = self.sat.pos_at(self.time)
         # print(f"lat: {lat}, lon: {lon}, height: {height}")
-        psi = footprint_central_angle_rad(550)
+        psi = footprint_central_angle_rad(550, 30)
 
         logger.info(f"psi: {psi}")
         logger.info(f"n_samples: {self.n_samples}")
@@ -89,7 +89,7 @@ class DrawTask(Task):
             for line in f:
                 la, lo, doppler, received_signal = line.strip().split(",")
                 res.append(
-                    (float(la) + 180, float(lo), float(doppler))
+                    (float(la) + 90, float(lo) + 180, float(doppler))
                 )
                 
         

@@ -33,7 +33,7 @@ if __name__ == "__main__":
     print(lat, lon, height)
 
     sat_altitude_km = 550
-    psi = footprint_central_angle_rad(sat_altitude_km)
+    psi = footprint_central_angle_rad(sat_altitude_km, 30)
     radius_km = footprint_surface_radius_km(sat_altitude_km)
     print(f"Altitude: {sat_altitude_km} km")
     print(f"Central angle: {math.degrees(psi):.2f}°")

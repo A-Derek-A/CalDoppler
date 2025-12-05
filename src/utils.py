@@ -3,21 +3,31 @@ import random
 from typing import Tuple
 
 
-def footprint_central_angle_rad(h_km: float, R_km: float = 6371.0) -> float:
+def footprint_central_angle_rad(h_km: float, e0_deg: float, R_km: float = 6371.0) -> float:
     """
-    Compute central angle (radians) between sub-satellite point and horizon point.
-
-    Args:
-        h_km: Satellite altitude in km
-        R_km: Earth radius in km (default: 6371.0)
-
-    Returns:
-        Central angle in radians
+    计算卫星覆盖区域的地心角α
+    
+    参数:
+        h_km: 卫星高度 (km)
+        e0_deg: 高度截止角/最小仰角 (度)
+        R_km: 地球半径 (km)
+    
+    返回:
+        α: 地心角 (弧度)
     """
-    ratio = R_km / (R_km + h_km)
-    # 确保在定义域内
+    # 将角度转换为弧度
+    e0_rad = math.radians(e0_deg)
+    
+    # 计算核心部分: R/(R+H) * cos(E0)
+    ratio = (R_km / (R_km + h_km)) * math.cos(e0_rad)
+    
+    # 确保值在acos的定义域 [-1, 1] 内
     ratio = max(-1.0, min(1.0, ratio))
-    return math.acos(ratio)
+    
+    # 计算最终结果: arccos(...) - E0
+    alpha_rad = math.acos(ratio) - e0_rad
+    
+    return alpha_rad
 
 
 def footprint_surface_radius_km(h_km: float, R_km: float = 6371.0) -> float:
