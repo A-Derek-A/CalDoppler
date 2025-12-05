@@ -30,7 +30,7 @@ def gen_html(pos: tuple[float, float, float], pt: list) -> str:
         + "ellipsoid : {radii : new Cesium.Cartesian3(30000.0, 30000.0, 30000.0), material : "
         "Cesium.Color.BLACK.withAlpha(1),}});\n"
     )
-    
+
     for id, p in enumerate(pt):
         viz_html += (
             "viewer.entities.add({name: "
@@ -46,7 +46,6 @@ def gen_html(pos: tuple[float, float, float], pt: list) -> str:
             "Cesium.Color.BLACK.withAlpha(1),}});\n"
         )
     return viz_html
-    
 
 
 def viz(pos: tuple[float, float, float], pt: list):
@@ -56,12 +55,8 @@ def viz(pos: tuple[float, float, float], pt: list):
     output_html = open(html_dir / f"{NAME}.html", "w")
     output_html.write(top_html.read())
 
-    output_html.write(
-        gen_html(
-            pos, pt
-        )
-    )
-    
+    output_html.write(gen_html(pos, pt))
+
     output_html.write(bottom_html.read())
 
     top_html.close()
@@ -76,5 +71,3 @@ def viz(pos: tuple[float, float, float], pt: list):
         return app.send_static_file(f"{NAME}.html")
 
     app.run(debug=False)
-
-
