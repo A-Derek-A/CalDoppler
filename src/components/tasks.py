@@ -51,6 +51,7 @@ class CalDopplerTask(Task):
 
         # 写入文件
         inter_dir = Path(__file__).parent.parent.parent / "data" / "intermediate"
+        inter_dir.mkdir(parents=True, exist_ok=True)
         with open(inter_dir / f"{self.task_id}.txt", "w") as f:
             for la, lo, doppler, received_signal in results:
                 f.write(f"{la},{lo},{doppler},{received_signal}\n")

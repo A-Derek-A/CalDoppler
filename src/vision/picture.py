@@ -5,6 +5,47 @@ import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 from pathlib import Path
+from scipy.interpolate import griddata
+
+
+def plot_contour_irregular(
+    data: list[tuple[float, float, float]],
+    saved_dir: Path, # 当前代码未使用
+    filename: str = "contour.png",
+):
+    if not data or len(data[0]) < 3:
+         print("Invalid data format.")
+         return
+
+    # 分别提取 x, y, z
+    points = np.array([(p[0], p[1]) for p in data])
+    values = np.array([p[2] for p in data])
+
+    # 定义插值的目标网格
+    xi = np.linspace(points[:, 0].min(), points[:, 0].max(), 100)
+    yi = np.linspace(points[:, 1].min(), points[:, 1].max(), 100)
+    Xi, Yi = np.meshgrid(xi, yi)
+
+    # 进行插值 ('linear', 'nearest', 'cubic')
+    Zi = griddata(points, values, (Xi, Yi), method='linear')
+
+    # 绘制等高线图
+    plt.figure(figsize=(6, 4))
+    if Zi is not None and not np.all(np.isnan(Zi)): # 检查插值是否成功
+        cs = plt.contour(Xi, Yi, Zi, levels=70, colors="k")
+        plt.clabel(cs, inline=True, fontsize=8)
+    else:
+       print("Interpolation failed or resulted in no valid data.")
+
+    plt.title("Contour plot: doppler (interpolated)")
+    plt.xlabel("x")
+    plt.ylabel("y")
+    plt.grid(True)
+
+    plt.savefig(saved_dir / filename)
+    
+    plt.show()
+    plt.close()
 
 
 def save_3d_plot_to_file(
