@@ -3,7 +3,7 @@ from components.simulate import TaskExecutor
 from components.sats import Sat
 from pathlib import Path
 from datetime import datetime, timezone
-from vision.picture import save_3d_plot_to_file
+from vision.picture import save_3d_plot_to_file, plot_contour_irregular
 from vision.viz import viz
 from logger import logger
 
@@ -46,6 +46,7 @@ if __name__ == "__main__":
     # executor.submit(draw_task).result()
 
     executor.shutdown()
+    
     pic_dir = Path(__file__).parent.parent / "data" / "pics"
     pic_dir.mkdir(parents=True, exist_ok=True)
     data = Path(__file__).parent.parent / "data" / "final"
@@ -60,4 +61,7 @@ if __name__ == "__main__":
             )
             vis_point.append((float(la), float(lo), 0))
     logger.info(f"{len(res)=}")
-    save_3d_plot_to_file(res, pic_dir)
+    # save_3d_plot_to_file(res, pic_dir)
+    plot_contour_irregular(res, pic_dir)
+
+    
