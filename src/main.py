@@ -57,7 +57,7 @@ if __name__ == "__main__":
         for line in f:
             la, lo, doppler, received_signal = line.strip().split(",")
             res.append(
-                (float(la) + 180, float(lo), float(doppler))
+                (float(la) + 180, float(lo) + 180, float(doppler))
             )
             vis_point.append((float(la), float(lo), 0))
     logger.info(f"{len(res)=}")

@@ -11,9 +11,9 @@ from scipy.interpolate import griddata
 def plot_footprint(
     data: list[tuple[float, float, float]],
     save_dir: Path,
-    filename: str = "footprint"
+
+    filename: str = "footprint.png",
 ):
-    """将3D图保存到文件，而不是显示"""
     fig = plt.figure(figsize=(10, 8))
     ax = fig.add_subplot(111, projection="3d")
 
@@ -37,6 +37,7 @@ def plot_footprint(
     print(f"图形已保存到: {save_dir / filename}")
     plt.show()
     plt.close(fig)  # 关闭图形释放内存
+
 
 def plot_contour_irregular(
     data: list[tuple[float, float, float]],
