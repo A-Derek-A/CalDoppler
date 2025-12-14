@@ -57,6 +57,38 @@ class CalDopplerTask(Task):
                 f.write(f"{la},{lo},{doppler},{received_signal}\n")
         return results
 
+@dataclass
+class TempCalFootprintTask(Task):
+    """计算足迹任务。"""
+    sat: Sat  # 卫星
+    time: Time
+    n_samples: int  # 子任务点的数量
+
+    def run(self):
+        logger.info(
+            f"task_id: {self.task_id}, time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+        )
+        results = []
+        lat, lon, height = self.sat.pos_at(self.time)
+        # print(f"lat: {lat}, lon: {lon}, height: {height}")
+        psi = footprint_central_angle_rad(550, 30)
+
+        logger.info(f"psi: {psi}")
+        logger.info(f"n_samples: {self.n_samples}")
+        for _ in range(self.n_samples):
+            la, lo = sample_point_in_spherical_cap(lat, lon, psi)
+            gs = wgs84.latlon(la, lo)
+            doppler, received_signal = self.sat.get_doppler(self.time, gs, True)
+            results.append((la, lo, 100 * (self.task_id // 10), 100 * (self.task_id // 10)))
+            # logger.info(f"{self.task_id = }")
+
+        # 写入文件
+        inter_dir = Path(__file__).parent.parent.parent / "data" / "intermediate"
+        inter_dir.mkdir(parents=True, exist_ok=True)
+        with open(inter_dir / f"{self.task_id}.txt", "w") as f:
+            for la, lo, doppler, received_signal in results:
+                f.write(f"{la},{lo},{doppler},{received_signal}\n")
+        return results
 
 class MergeTask(Task):
     """合并任务。"""
@@ -69,6 +101,23 @@ class MergeTask(Task):
         if (final_dir / f"result.txt").exists():
             (final_dir / f"result.txt").unlink()
         with open(final_dir / f"result.txt", "a") as f:
+            for file in inter_dir.glob("*.txt"):
+                with open(file, "r") as f_in:
+                    for line in f_in:
+                        f.write(line)
+                file.unlink()
+
+class MergeFootprintTask(Task):
+    """合并足迹任务。"""
+
+    def run(self):
+        """合并所有子任务的足迹。"""
+        inter_dir = Path(__file__).parent.parent.parent / "data" / "intermediate"
+        final_dir = Path(__file__).parent.parent.parent / "data" / "final"
+        final_dir.mkdir(parents=True, exist_ok=True)
+        if (final_dir / f"result-footprint.txt").exists():
+            (final_dir / f"result-footprint.txt").unlink()
+        with open(final_dir / f"result-footprint.txt", "a") as f:
             for file in inter_dir.glob("*.txt"):
                 with open(file, "r") as f_in:
                     for line in f_in:
@@ -95,4 +144,6 @@ class DrawTask(Task):
                 
         
         save_3d_plot_to_file(res, pic_dir)
-        
+
+
+                
