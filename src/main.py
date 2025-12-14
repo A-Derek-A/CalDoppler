@@ -13,7 +13,7 @@ data_dir = work_dir / "data"
 if __name__ == "__main__":
     executor = TaskExecutor()
 
-    all_nums = 10000
+    all_nums = 100000
     sub_nums = 100
     task_num = all_nums // sub_nums
 
@@ -61,7 +61,7 @@ if __name__ == "__main__":
             )
             vis_point.append((float(la), float(lo), 0))
     logger.info(f"{len(res)=}")
-    # save_3d_plot_to_file(res, pic_dir)
-    plot_contour_irregular(res, pic_dir)
+    save_3d_plot_to_file(res, pic_dir)
+    # plot_contour_irregular(res, pic_dir)
 
     

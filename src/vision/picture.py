@@ -8,6 +8,36 @@ from pathlib import Path
 from scipy.interpolate import griddata
 
 
+def plot_footprint(
+    data: list[tuple[float, float, float]],
+    save_dir: Path,
+    filename: str = "footprint"
+):
+    """将3D图保存到文件，而不是显示"""
+    fig = plt.figure(figsize=(10, 8))
+    ax = fig.add_subplot(111, projection="3d")
+
+    x = [p[0] for p in data]
+    y = [p[1] for p in data]
+    z = [p[2] for p in data]
+
+    scatter = ax.scatter(x, y, z, c=z, cmap="viridis", s=20, alpha=0.8)
+
+    ax.set_xlabel("X")
+    ax.set_ylabel("Y")
+    ax.set_zlabel("Z")
+    ax.set_title("3D Plot")
+
+    plt.colorbar(scatter, ax=ax, label="Z value")
+    plt.tight_layout()
+    
+    # 保存到文件而不是显示
+    plt.savefig(save_dir / filename, dpi=300, bbox_inches="tight")
+    
+    print(f"图形已保存到: {save_dir / filename}")
+    plt.show()
+    plt.close(fig)  # 关闭图形释放内存
+
 def plot_contour_irregular(
     data: list[tuple[float, float, float]],
     saved_dir: Path, # 当前代码未使用
