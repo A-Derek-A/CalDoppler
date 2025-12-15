@@ -33,7 +33,7 @@ class Sat:
         return lat, lon, height
 
     def get_doppler(
-        self, time: Time, ground_station: GeographicPosition, debug: bool = False
+        self, time: Time, ground_station: GeographicPosition, debug: bool = False, mode: int = 1
     ) -> tuple[float, float]:
 
         # 方法1：最推荐（最简洁、最不容易出错）
@@ -42,8 +42,10 @@ class Sat:
             ground_station.longitude.degrees,
             elevation_m=0,
         )
-
-        topocentric = (self.sat - gs).at(time)  # 关键！卫星 - 地面站
+        if mode == 1:
+            topocentric = (self.sat - gs).at(time)  # 关键！卫星 - 地面站
+        elif mode == 2:
+            topocentric = (gs - self.sat).at(time)  # 关键！地面站 - 卫星
 
         _, _, topo_range, _, _, topo_range_rate = topocentric.frame_latlon_and_rates(
             ground_station
